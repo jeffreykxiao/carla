@@ -59,7 +59,7 @@ if not "%1"=="" (
     goto :arg-parse
 )
 
-set PYTHON_LIB_PATH=%ROOT_PATH%PythonAPI/carla
+set PYTHON_LIB_PATH=%ROOT_PATH:/=\%PythonAPI\carla\
 
 if %REMOVE_INTERMEDIATE% == false (
     if %BUILD_FOR_PYTHON3% == false (
@@ -73,9 +73,9 @@ if %REMOVE_INTERMEDIATE% == false (
 if %REMOVE_INTERMEDIATE% == true (
     rem Remove directories
     for %%G in (
-        "%PYTHON_LIB_PATH%/build",
-        "%PYTHON_LIB_PATH%/dist",
-        "%PYTHON_LIB_PATH%/source/carla.egg-info"
+        "%PYTHON_LIB_PATH%build",
+        "%PYTHON_LIB_PATH%dist",
+        "%PYTHON_LIB_PATH%source\carla.egg-info"
     ) do (
         if exist %%G (
             echo %FILE_N% Cleaning %%G
@@ -90,7 +90,7 @@ if %REMOVE_INTERMEDIATE% == true (
 )
 
 cd "%PYTHON_LIB_PATH%"
-if exist "%PYTHON_LIB_PATH%/dist" goto already_installed
+if exist "%PYTHON_LIB_PATH%dist" goto already_installed
 
 rem ============================================================================
 rem -- Check for py ------------------------------------------------------------
@@ -121,12 +121,12 @@ rem ============================================================================
 
 :success
     echo.
-    if %BUILD_FOR_PYTHON3%==true echo %FILE_N% Carla lib for python has been successfully installed in "%PYTHON_LIB_PATH%/dist"!
+    if %BUILD_FOR_PYTHON3%==true echo %FILE_N% Carla lib for python has been successfully installed in "%PYTHON_LIB_PATH%dist"!
     goto good_exit
 
 :already_installed
     echo.
-    echo %FILE_N% [ERROR] Already installed in "%PYTHON_LIB_PATH%/dist"
+    echo %FILE_N% [ERROR] Already installed in "%PYTHON_LIB_PATH%dist"
     goto good_exit
 
 :py2_not_supported
